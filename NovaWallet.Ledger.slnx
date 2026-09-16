@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/NovaWallet.Ledger.Api/NovaWallet.Ledger.Api.csproj" />
+    <Project Path="src/NovaWallet.Ledger.Application/NovaWallet.Ledger.Application.csproj" />
+    <Project Path="src/NovaWallet.Ledger.Domain/NovaWallet.Ledger.Domain.csproj" />
+    <Project Path="src/NovaWallet.Ledger.Infrastructure/NovaWallet.Ledger.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/NovaWallet.Ledger.Tests/NovaWallet.Ledger.Tests.csproj" />
+  </Folder>
+</Solution>

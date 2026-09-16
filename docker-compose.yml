@@ -1,0 +1,36 @@
+services:
+  mysql:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: root_secret
+      MYSQL_DATABASE: novawallet_ledger
+      MYSQL_USER: novawallet
+      MYSQL_PASSWORD: novawallet_secret
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysqldata:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__DefaultConnection: "Server=mysql;Port=3306;Database=novawallet_ledger;User=novawallet;Password=novawallet_secret;"
+      Jwt__Key: "SuperSecretKeyForDevOnly_ChangeInProduction_32chars!"
+      Jwt__Issuer: "NovaWallet.Ledger"
+      Jwt__Audience: "NovaWallet.Api"
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+volumes:
+  mysqldata:

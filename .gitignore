@@ -1,0 +1,14 @@
+bin/
+obj/
+.vs/
+*.user
+*.suo
+.idea/
+*.DotSettings.user
+pgdata/
+mysqldata/
+*.db
+node_modules/
+package.json
+package-lock.json
+generate_pptx.js
