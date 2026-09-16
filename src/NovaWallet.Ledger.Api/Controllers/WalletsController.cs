@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NovaWallet.Ledger.Api.Contracts;
 using NovaWallet.Ledger.Application.Commands;
 using NovaWallet.Ledger.Application.DTOs;
 using NovaWallet.Ledger.Application.Queries;
@@ -89,8 +90,3 @@ public class WalletsController : ControllerBase
         return Ok(result);
     }
 }
-
-// ── Request DTOs ──────────────────────────────────────────────
-public record CreateWalletRequest(string CustomerId);
-public record CreditRequest(long AmountKobo, string? Reference);
-public record TransferRequest(Guid ToWalletId, long AmountKobo, string? Reference);
