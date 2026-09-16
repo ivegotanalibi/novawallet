@@ -104,6 +104,23 @@ using (var scope = app.Services.CreateScope())
     db.Database.EnsureCreated();
 }
 
+// ── Open Swagger UI in browser on startup (Development only) ──
+if (app.Environment.IsDevelopment())
+{
+    app.Lifetime.ApplicationStarted.Register(() =>
+    {
+        try
+        {
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+            {
+                FileName = "http://localhost:5099/swagger",
+                UseShellExecute = true
+            });
+        }
+        catch { /* non-critical — browser just won't open */ }
+    });
+}
+
 app.Run();
 
 // Make the implicit Program class visible to integration tests
