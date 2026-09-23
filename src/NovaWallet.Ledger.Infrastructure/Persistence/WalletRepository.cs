@@ -30,7 +30,7 @@ public class WalletRepository : IWalletRepository
 
         return await _db.Wallets
             .FromSqlRaw("SELECT * FROM wallets WHERE id = {0} FOR UPDATE", id)
-            .FirstOrDefaultAsync(ct);
+            .FirstOrDefaultAsync(ct);   
     }
 
     public Task<Wallet?> GetByCustomerIdAsync(string customerId, CancellationToken ct = default)

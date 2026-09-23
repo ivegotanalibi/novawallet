@@ -29,6 +29,7 @@ builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
+        options.MapInboundClaims = false; // keep standard JWT claim names (e.g. "sub") unmapped
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
@@ -85,13 +86,13 @@ var app = builder.Build();
 // ── Middleware pipeline ───────────────────────────────────────
 app.UseMiddleware<CorrelationIdMiddleware>();  // first — wraps entire request in logging scope
 app.UseMiddleware<ExceptionMiddleware>();
-app.UseMiddleware<ThrottlingMiddleware>();
+app.UseAuthentication();                       // must run BEFORE middleware that reads claims
+app.UseMiddleware<ThrottlingMiddleware>();     // throttles per authenticated user (sub claim)
 app.UseMiddleware<TransferReplayMiddleware>();
 
 app.UseSwagger();
 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "NovaWallet Ledger v1"));
 
-app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
